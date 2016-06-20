@@ -1,6 +1,11 @@
 const https = require('https');
 var username = 'ryannebuda';
 
+function printMessage(username, badgeCount, points) {
+  var message = username + " has " + badgeCount + " total badge(s) and " + points + " points in JavaScript";
+  console.log(message);
+}
+
 var request = https.get('https://teamtreehouse.com/' + username + '.json', (response) => {
   var body = "";
   // console.log(response.statusCode);
@@ -11,7 +16,9 @@ var request = https.get('https://teamtreehouse.com/' + username + '.json', (resp
     // process.stdout.write(d);
   });
   response.on('end', function(){
-    console.log(body);
+    var profile = JSON.parse(body);
+    // console.dir(profile);
+    printMessage(username, profile.badges.length, profile.points.JavaScript)
   })
 });
 // request.end();
